@@ -1,5 +1,6 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect
 from pessoa import Pessoa
+
 
 pessoas = [
     Pessoa('Jean', 42, 1.80),
@@ -17,6 +18,15 @@ def inicio():
 @app.route('/novo')
 def novo():
     return render_template('novo.html')
+
+@app.route('/criar', methods=['POST'])
+def criar():
+    nome = request.form['nome']
+    idade = request.form['idade']
+    altura = request.form['altura']
+
+    pessoas.append(Pessoa(nome, idade, altura))
+    return redirect('/')
 
 
 
